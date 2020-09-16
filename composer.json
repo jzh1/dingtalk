@@ -1,4 +1,13 @@
 {
+    "name": "jzh1/weather",
+    "description": "A weather SDK.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jzh1",
+            "email": "949363409@qq.com"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Jzh1\\DingTalk\\": "./src/"
