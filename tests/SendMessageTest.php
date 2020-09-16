@@ -23,8 +23,12 @@ class SendMessageTest extends TestCase
         $env = '测试环境';
         $sendMessage = '订单测试message';
         $class = new SendMessage($url, $tel, $env);
-        $dd = $class->sendLinkMessage($sendMessage, $sendMessage, $sendMessage);
+        $dd = $class->sendTextMessage($sendMessage);
+        $dd2 = $class->sendLinkMessage($sendMessage, $sendMessage, $sendMessage);
+        $dd3 = $class->sendMarkdownMessage($sendMessage, $sendMessage);
 
         print_r($dd);
+        print_r($dd2);
+        print_r($dd3);
     }
 }
