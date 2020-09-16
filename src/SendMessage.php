@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the jzh/dingtalk.
+ *
+ * (c) 江兆辉 <949363409@qq.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jzh1\DingTalk;
 
 use GuzzleHttp\Client;
@@ -32,28 +41,30 @@ class SendMessage
     }
 
     /**
-     * 发送 Markdown 类型的消息
+     * 发送 Markdown 类型的消息.
      *
      * @param $title
      * @param $sendMessage
      * @param string $format
-     * @param bool $isAtAll
+     * @param bool   $isAtAll
+     *
      * @return mixed|string
+     *
      * @throws HttpException
      */
-    public function sendMarkdownMessage($sendMessage,$title, $format = 'json', $isAtAll = false)
+    public function sendMarkdownMessage($sendMessage, $title, $format = 'json', $isAtAll = false)
     {
         // 发送数据组装
         $content = [
             'msgtype' => 'markdown',
             'markdown' => [
                 'title' => $title,
-                'text' => $sendMessage . $this->telString,
+                'text' => $sendMessage.$this->telString,
             ],
             'at' => [
                 'atMobiles' => $this->telArray,
-                'isAtAll' => $isAtAll
-            ]
+                'isAtAll' => $isAtAll,
+            ],
         ];
 
         try {
@@ -63,18 +74,19 @@ class SendMessage
 
             return 'json' === $format ? json_decode($response, true) : $response;
         } catch (\Exception $e) {
-
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
     /**
-     * 发送 text 类型消息
+     * 发送 text 类型消息.
      *
      * @param $sendMessage  发送消息体
-     * @param string $format 返回数据整理 json（default） or array
-     * @param bool $isAtAll 是否@所有人 true（default） 是 false 否
+     * @param string $format  返回数据整理 json（default） or array
+     * @param bool   $isAtAll 是否@所有人 true（default） 是 false 否
+     *
      * @return mixed|string
+     *
      * @throws HttpException
      */
     public function sendTextMessage($sendMessage, $format = 'json', $isAtAll = false)
@@ -82,35 +94,36 @@ class SendMessage
         $content = [
             'msgtype' => 'text',
             'text' => [
-                'content' => $sendMessage . $this->telString
+                'content' => $sendMessage.$this->telString,
             ],
             'at' => [
                 'atMobiles' => $this->telArray,
-                'isAtAll' => $isAtAll
-            ]
+                'isAtAll' => $isAtAll,
+            ],
         ];
 
         try {
             $response = $this->getHttpClient()->post($this->url, [
-                'json' => $content
+                'json' => $content,
             ])->getBody()->getContents();
 
             return 'json' === $format ? json_decode($response, true) : $response;
         } catch (\Exception $e) {
-
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
     /**
-     * 链接类型
+     * 链接类型.
      *
      * @param $title 标题
      * @param $sendMessage 发送信息
      * @param $messageUrl 发送链接url
      * @param string $picUrl 图片url
      * @param string $format
+     *
      * @return mixed|string
+     *
      * @throws HttpException
      */
     public function sendLinkMessage($sendMessage, $title, $messageUrl, $picUrl = '', $format = 'json')
@@ -122,17 +135,16 @@ class SendMessage
                 'text' => $sendMessage,
                 'picUrl' => $picUrl,
                 'messageUrl' => $messageUrl,
-            ]
+            ],
         ];
 
         try {
             $response = $this->getHttpClient()->post($this->url, [
-                'json' => $content
+                'json' => $content,
             ])->getBody()->getContents();
 
             return 'json' === $format ? json_decode($response, true) : $response;
         } catch (\Exception $e) {
-
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
     }

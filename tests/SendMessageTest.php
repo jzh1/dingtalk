@@ -1,4 +1,14 @@
 <?php
+
+/*
+ * This file is part of the jzh/dingtalk.
+ *
+ * (c) 江兆辉 <949363409@qq.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Jzh1\DingTalk\Tests;
 
 use Jzh1\DingTalk\SendMessage;
@@ -12,8 +22,8 @@ class SendMessageTest extends TestCase
         $tel = '@13386434116@15949904116';
         $env = '测试环境';
         $sendMessage = '订单测试message';
-        $class = new SendMessage($url,$tel,$env);
-        $dd = $class->sendLinkMessage($sendMessage,$sendMessage,$sendMessage);
+        $class = new SendMessage($url, $tel, $env);
+        $dd = $class->sendLinkMessage($sendMessage, $sendMessage, $sendMessage);
 
         print_r($dd);
     }
