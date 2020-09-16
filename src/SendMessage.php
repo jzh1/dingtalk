@@ -54,7 +54,7 @@ class SendMessage
     }
 
     // 发送 text 类型消息
-    public function sendTextMessage($sendMessage)
+    public function sendTextMessage($sendMessage, $format = 'json')
     {
         $content = [
             'msgtype' => 'text',
@@ -68,11 +68,9 @@ class SendMessage
         ];
 
         try {
-            $response = $this->getHttpClient()->post($this->url, [
-                'query' => $content,
-            ])->getBody()->getContents();
+            $response = $this->getHttpClient()->post($this->url, ['json' => $content])->getBody()->getContents();
 
-            return $response;
+            return 'json' === $format ? json_decode($response, true) : $response;
         } catch (\Exception $e) {
 
             throw new HttpException($e->getMessage(), $e->getCode(), $e);

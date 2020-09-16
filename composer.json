@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "Jzh1\\Dingtalk\\": "src"
+            "Jzh1\\DingTalk\\": "./src/"
         }
     },
     "require": {
