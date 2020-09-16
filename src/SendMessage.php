@@ -31,30 +31,53 @@ class SendMessage
         return new Client($this->guzzleOptions);
     }
 
-    // 发送 Markdown 消息
-    public function sendMarkdownMessage($title, $sendMessage)
+    /**
+     * 发送 Markdown 类型的消息
+     *
+     * @param $title
+     * @param $sendMessage
+     * @param string $format
+     * @param bool $isAtAll
+     * @return mixed|string
+     * @throws HttpException
+     */
+    public function sendMarkdownMessage($title, $sendMessage, $format = 'json', $isAtAll = false)
     {
         // 发送数据组装
         $content = [
             'msgtype' => 'markdown',
             'markdown' => [
                 'title' => $title,
-                'text' => $sendMessage . "\n" . $this->telString,
+                'text' => $sendMessage . $this->telString,
             ],
             'at' => [
                 'atMobiles' => $this->telArray,
-                'isAtAll' => false
+                'isAtAll' => $isAtAll
             ]
-
         ];
 
-        $response = $this->getHttpClient()->post($this->url, [
-            'query' => $content,
-        ])->getBody()->getContents();
+        try {
+            $response = $this->getHttpClient()->post($this->url, [
+                'json' => $content,
+            ])->getBody()->getContents();
+
+            return 'json' === $format ? json_decode($response, true) : $response;
+        } catch (\Exception $e) {
+
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
-    // 发送 text 类型消息
-    public function sendTextMessage($sendMessage, $format = 'json')
+    /**
+     * 发送 text 类型消息
+     *
+     * @param $sendMessage  发送消息体
+     * @param string $format 返回数据整理 json（default） or array
+     * @param bool $isAtAll 是否@所有人 true（default） 是 false 否
+     * @return mixed|string
+     * @throws HttpException
+     */
+    public function sendTextMessage($sendMessage, $format = 'json', $isAtAll = false)
     {
         $content = [
             'msgtype' => 'text',
@@ -63,18 +86,54 @@ class SendMessage
             ],
             'at' => [
                 'atMobiles' => $this->telArray,
-                'isAtAll' => false
+                'isAtAll' => $isAtAll
             ]
         ];
 
         try {
-            $response = $this->getHttpClient()->post($this->url, ['json' => $content])->getBody()->getContents();
+            $response = $this->getHttpClient()->post($this->url, [
+                'json' => $content
+            ])->getBody()->getContents();
 
             return 'json' === $format ? json_decode($response, true) : $response;
         } catch (\Exception $e) {
 
             throw new HttpException($e->getMessage(), $e->getCode(), $e);
         }
+    }
 
+    /**
+     * 链接类型
+     *
+     * @param $title 标题
+     * @param $sendMessage 发送信息
+     * @param $messageUrl 发送链接url
+     * @param string $picUrl 图片url
+     * @param string $format
+     * @return mixed|string
+     * @throws HttpException
+     */
+    public function sendLinkMessage($title, $sendMessage, $messageUrl , $picUrl = '', $format = 'json')
+    {
+        $content = [
+            'msgtype' => 'link',
+            'link' => [
+                'title' => $title,
+                'text' => $sendMessage,
+                'picUrl' => $picUrl,
+                'messageUrl' => $messageUrl,
+            ]
+        ];
+
+        try {
+            $response = $this->getHttpClient()->post($this->url, [
+                'json' => $content
+            ])->getBody()->getContents();
+
+            return 'json' === $format ? json_decode($response, true) : $response;
+        } catch (\Exception $e) {
+
+            throw new HttpException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }

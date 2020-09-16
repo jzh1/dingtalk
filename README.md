@@ -9,6 +9,11 @@
 $ composer require jzh1/dingtalk -vvv
 ```
 
+## 申请使用钉钉通知
+
+钉钉开发文档地址：https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq
+
+
 ## Usage
 
 TODO
