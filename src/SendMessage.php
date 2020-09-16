@@ -41,7 +41,7 @@ class SendMessage
      * @return mixed|string
      * @throws HttpException
      */
-    public function sendMarkdownMessage($title, $sendMessage, $format = 'json', $isAtAll = false)
+    public function sendMarkdownMessage($sendMessage,$title, $format = 'json', $isAtAll = false)
     {
         // 发送数据组装
         $content = [
@@ -113,7 +113,7 @@ class SendMessage
      * @return mixed|string
      * @throws HttpException
      */
-    public function sendLinkMessage($title, $sendMessage, $messageUrl , $picUrl = '', $format = 'json')
+    public function sendLinkMessage($sendMessage, $title, $messageUrl, $picUrl = '', $format = 'json')
     {
         $content = [
             'msgtype' => 'link',

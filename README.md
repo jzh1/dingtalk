@@ -12,7 +12,7 @@ $ composer require jzh1/dingtalk -vvv
 ## 申请使用钉钉通知
 
 钉钉开发文档地址：https://ding-doc.dingtalk.com/doc#/serverapi2/qf2nxq
-
+发送的信息内包含关键字
 
 ## Usage
 
