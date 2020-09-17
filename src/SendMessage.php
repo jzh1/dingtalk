@@ -132,7 +132,7 @@ class SendMessage
             'msgtype' => 'link',
             'link' => [
                 'title' => $title,
-                'text' => '【'.$this->environmental.'】'.$sendMessage,
+                'text' =>  "## ".'【'.$this->environmental.'】'."\n>".$sendMessage,
                 'picUrl' => $picUrl,
                 'messageUrl' => $messageUrl,
             ],
