@@ -59,7 +59,7 @@ class SendMessage
             'msgtype' => 'markdown',
             'markdown' => [
                 'title' => $title,
-                'text' => '【'.$this->environmental.'】'.$sendMessage.$this->telString,
+                'text' => "## ".'【'.$this->environmental.'】'."\n>".$sendMessage.$this->telString,
             ],
             'at' => [
                 'atMobiles' => $this->telArray,
@@ -132,7 +132,7 @@ class SendMessage
             'msgtype' => 'link',
             'link' => [
                 'title' => $title,
-                'text' =>  "## ".'【'.$this->environmental.'】'."\n>".$sendMessage,
+                'text' =>  '【'.$this->environmental.'】'.$sendMessage,
                 'picUrl' => $picUrl,
                 'messageUrl' => $messageUrl,
             ],
